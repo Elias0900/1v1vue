@@ -334,7 +334,7 @@ section:nth-child(even) {
 
 .section-title {
   font-size: 8vw;
-  font-weight: 800;
+  font-weight: 500;
   margin-bottom: 2rem;
   background: var(--gradient);
   -webkit-background-clip: text;

@@ -56,7 +56,6 @@
     </button>
 
     <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </form>
 </template>
 
@@ -125,11 +124,18 @@ async function handleSubmit() {
       router.push('/')
     }, 1500)
 
-  } catch (error) {
-    errorMessage.value = "Une erreur est survenue, merci de réessayer."
-    toast.error(errorMessage.value)
-  } finally {
-    loading.value = false
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response) {
+      const serverMessage = error.response.data?.message
+      if (serverMessage) {
+        errorMessage.value = serverMessage
+        toast.error(serverMessage)
+      } else {
+        errorMessage.value = 'Une erreur est survenue, merci de réessayer.'
+        toast.error(errorMessage.value)
+      }
+    }
+
   }
 }
 
