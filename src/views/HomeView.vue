@@ -26,7 +26,7 @@
   <!-- Hero vidéo -->
   <section class="hero-video" data-aos="zoom-in">
     <video autoplay muted loop playsinline class="bg-video">
-      <source src="/public/cross.mp4" type="video/mp4" />
+      <source src="/cross.mp4" type="video/mp4" />
       Ton navigateur ne supporte pas la vidéo.
     </video>
     <div class="hero-overlay ">
