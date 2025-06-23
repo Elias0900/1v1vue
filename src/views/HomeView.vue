@@ -39,8 +39,9 @@
   <section id="home" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
     <div class="bg-effect bg-effect-1"></div>
     <div class="section-content">
-      <h1 class="section-title">Accueil</h1>
-      <p class="section-description">Viens montrer ton talent sur le terrain !</p>
+      <h1 class="section-title">Treg'One</h1>
+      <p class="section-description">Premier tournoi 1 vs 1 du département. Du shoot, du handle, du cross !</p>
+      <p>Viens montrer que tu es le meilleur ! Du cash a gagner et le respect de tout le monde</p>
     </div>
   </section>
 
