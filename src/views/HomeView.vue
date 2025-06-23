@@ -1,9 +1,11 @@
 <template>
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-container">
       <div class="logo">Tournoi Basket</div>
       <button
         class="mobile-nav-toggle"
+        :class="{ active: mobileNavOpen }"
         aria-label="Toggle navigation"
         @click="toggleMobileNav"
         :aria-expanded="mobileNavOpen.toString()"
@@ -12,66 +14,73 @@
         <span class="bar"></span>
         <span class="bar"></span>
       </button>
-      <ul :class="['nav-links', { 'nav-open': mobileNavOpen }]">
-        <li><a href="#home" @click="closeMobileNav">Accueil</a></li>
-        <li><a href="#rules" @click="closeMobileNav">Règles</a></li>
-        <li><a href="#register" @click="closeMobileNav">Inscription</a></li>
+      <ul :class="['nav-links', { active: mobileNavOpen }]">
+        <li><a @click.prevent="scrollToSection('home')">Accueil</a></li>
+        <li><a @click.prevent="scrollToSection('rules')">Règles</a></li>
+        <li><a @click.prevent="scrollToSection('register')">Inscription</a></li>
       </ul>
     </div>
     <div v-if="mobileNavOpen" class="overlay" @click="closeMobileNav"></div>
   </nav>
 
-  <section id="home">
-    <div class="bg-effect bg-effect-1"></div>
-    <div class="section-content">
-      <h1 class="section-title">Bienvenue au tournoi 1vs1</h1>
-      <p class="section-description">Viens montrer ton talent sur le terrain !</p>
+  <!-- Hero vidéo -->
+  <section class="hero-video" data-aos="zoom-in">
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="/public/cross.mp4" type="video/mp4" />
+      Ton navigateur ne supporte pas la vidéo.
+    </video>
+    <div class="hero-overlay ">
+      <h1 class="hero-title section-title">Treg'One</h1>
+      <p class="section-description">Ramène ton handle Repars avec ton cash</p>
     </div>
   </section>
 
-  <section id="rules">
+  <!-- Sections -->
+  <section id="home" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
+    <div class="bg-effect bg-effect-1"></div>
+    <div class="section-content">
+      <h1 class="section-title">Accueil</h1>
+      <p class="section-description">Viens montrer ton talent sur le terrain !</p>
+    </div>
+  </section>
+
+  <section id="rules" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
     <div class="bg-effect bg-effect-2"></div>
     <div class="section-content">
       <h1 class="section-title">Règles du tournoi</h1>
       <ul class="section-description list-disc list-inside">
-        <li>Matchs en 5 minutes chrono</li>
-        <li>Points par panier réussi</li>
-        <li>Pas de contact physique autorisé</li>
+        <ul>Matchs en 6 minutes ou 8 points</ul>
+        <ul>1 / 2 Points par panier</ul>
+        <ul>5 euros par personnes </ul>
+        <ul>Le vainqueur repart avec la cagnotte</ul>
+        <ul>Date et Horaires vont être communiqué ultérieurement</ul>
+        <ul>Inscriptions dans la limite des places disponible</ul>
       </ul>
     </div>
   </section>
 
-  <section id="register">
+  <section id="register" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
     <div class="bg-effect bg-effect-1"></div>
     <div class="section-content">
       <h1 class="section-title">Inscription</h1>
       <button class="register-btn" @click="openModal">S'inscrire</button>
-
-      <!-- Ici tu peux intégrer ton composant formulaire -->
     </div>
   </section>
 
-  <!-- MODAL -->
+  <!-- Modal d'inscription -->
   <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
-      <RegistrationForm />
+    <RegistrationForm />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import RegistrationForm from '../components/forms/RegistrationForm.vue'
 
 const mobileNavOpen = ref(false)
-
 const isModalOpen = ref(false)
-
-function openModal() {
-  isModalOpen.value = true
-}
-
-function closeModal() {
-  isModalOpen.value = false
-}
 
 function toggleMobileNav() {
   mobileNavOpen.value = !mobileNavOpen.value
@@ -80,21 +89,91 @@ function toggleMobileNav() {
 function closeMobileNav() {
   mobileNavOpen.value = false
 }
+
+function openModal() {
+  isModalOpen.value = true
+}
+function closeModal() {
+  isModalOpen.value = false
+}
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+    closeMobileNav()
+  }
+}
+
+onMounted(() => {
+  AOS.init({ duration: 1200, once: false })
+})
 </script>
 
 <style scoped>
+/* Smooth scroll pour ancres */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navbar compacte */
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  padding: 1.2rem 5%;
+  padding: 0.6rem 5%;
   backdrop-filter: blur(12px);
-  background: var(--glass-bg);
+  //background: var(--glass-bg);
   border-bottom: var(--border);
   z-index: 1000;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow);
+}
+.navbar-container { /* inchangé */ }
+
+/* Hero section */
+.hero-video {
+  position: relative;
+  width: 100%;
+  height: 40vh;
+  overflow: hidden;
+  margin-top: calc(0.6rem + 1px);
+}
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.5) saturate(0.8); /* <-- Ajouté */
+  opacity: 0.8; /* <-- Facultatif */
+
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6); /* ou même 0.6 */
+  color: white;
+  text-align: center;
+}
+.hero-title { font-size: 3rem; text-transform: uppercase; }
+.hero-subtitle { font-size: 1.5rem; margin-top: 1rem; }
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Sections & AOS */
+section {
+  min-height: 80vh;
+  padding: 120px 5% 80px;
+  position: relative;
 }
 
 .navbar.scrolled {
