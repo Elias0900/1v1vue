@@ -1,7 +1,5 @@
 <template>
   <form
-    action="https://formspree.io/f/manjdnvg"
-    method="POST"
     @submit.prevent="handleSubmit"
     class="register-form"
   >
@@ -42,10 +40,7 @@
       <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
     </fieldset>
 
-    <!-- Hidden field to help Formspree identify the form -->
-    <input type="hidden" name="_subject" value="Nouvelle inscription" />
-    <!-- Optional: pour redirection après inscription -->
-    <input type="hidden" name="_next" value="https://ton-site.com/merci" />
+
 
     <button type="submit" class="btn" :disabled="loading">
       <span></span>
@@ -108,7 +103,9 @@ async function handleSubmit() {
       email: email.value,
     }
 
-    const res = await axios.post('http://localhost:3000/api/inscriptions', formData)
+    //const res = await axios.post('http://localhost:3000/api/inscriptions', formData)
+    const res = await axios.post('https://backend-lppd.onrender.com/api/inscriptions', formData)
+
 
     successMessage.value = res.data.message
     toast.success(res.data.message)
