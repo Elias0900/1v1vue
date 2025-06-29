@@ -26,7 +26,7 @@
   <!-- Hero vidéo -->
   <section class="hero-video" data-aos="zoom-in">
     <video autoplay muted loop playsinline class="bg-video">
-      <source src="/cross.mp4" type="video/mp4" />
+      <source src="/kyrie.mp4" type="video/mp4" />
       Ton navigateur ne supporte pas la vidéo.
     </video>
     <div class="hero-overlay ">
@@ -37,6 +37,10 @@
 
   <!-- Sections -->
   <section id="home" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="/chut.mp4" type="video/mp4" />
+      Ton navigateur ne supporte pas la vidéo.
+    </video>
     <div class="bg-effect bg-effect-1"></div>
     <div class="section-content">
       <h1 class="section-title">Treg'One</h1>
@@ -46,6 +50,10 @@
   </section>
 
   <section id="rules" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
+    <video autoplay muted loop playsinline class="bg-video" loading="lazy">
+      <source src="/debutcross.mp4" type="video/mp4" />
+      Ton navigateur ne supporte pas la vidéo.
+    </video>
     <div class="bg-effect bg-effect-2"></div>
     <div class="section-content">
       <h1 class="section-title">Règles du tournoi</h1>
@@ -61,6 +69,10 @@
   </section>
 
   <section id="register" data-aos="zoom-in-up" data-aos-offset="200" data-aos-easing="ease-in-sine">
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="/jojo2.mp4" type="video/mp4" />
+      Ton navigateur ne supporte pas la vidéo.
+    </video>
     <div class="bg-effect bg-effect-1"></div>
     <div class="section-content">
       <h1 class="section-title">Inscription</h1>
@@ -100,11 +112,17 @@ function closeModal() {
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id)
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
-    closeMobileNav()
-  }
+  if (!el) return
+
+  const offset = 80 // hauteur de ta navbar en pixels
+  const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+
+  window.scrollTo({
+    top,
+    behavior: 'smooth',
+  })
 }
+
 
 onMounted(() => {
   AOS.init({ duration: 1200, once: false })
@@ -134,7 +152,7 @@ html {
 .hero-video {
   position: relative;
   width: 100%;
-  height: 40vh;
+  height: 60vh;
   overflow: hidden;
   margin-top: calc(0.6rem + 1px);
 }
@@ -377,6 +395,10 @@ section {
   .overlay.active {
     opacity: 1;
     visibility: visible;
+  }
+
+  .hero-video {
+    height: 70vh;
   }
 }
 
